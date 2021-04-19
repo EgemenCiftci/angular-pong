@@ -1,0 +1,19 @@
+text {
+  font-family: "Atomic Age", cursive;
+  font-size: 48px;
+  fill: silver;
+}
+
+#ball {
+  fill: silver;
+}
+
+#net {
+  stroke: silver;
+  stroke-width: 3%;
+  stroke-dasharray: 8%, 8%;
+}
+
+.racket {
+  fill: white;
+}
