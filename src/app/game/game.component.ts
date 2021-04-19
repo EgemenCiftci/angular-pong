@@ -75,19 +75,17 @@ export class GameComponent implements OnInit {
 
     if (this.isPlayer0Scored()) {
       this.score0++;
-      await this.delay(1000);
-      this.startRound();
+      if (!this.isPlayer0Win() && !this.isPlayer1Win()) {
+        await this.delay(1000);
+        this.startRound();
+      }
       return;
     } else if (this.isPlayer1Scored()) {
       this.score1++;
-      await this.delay(1000);
-      this.startRound();
-      return;
-    }
-
-    if (this.isPlayer0Win()) {
-      return;
-    } else if (this.isPlayer1Win()) {
+      if (!this.isPlayer0Win() && !this.isPlayer1Win()) {
+        await this.delay(1000);
+        this.startRound();
+      }
       return;
     }
 

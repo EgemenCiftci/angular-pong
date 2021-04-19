@@ -5,7 +5,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  height: calc(100vh - 16px);
+  height: calc(100vh - 22px);
   width: 100%;
   background: yellow;
   font-family: "Nova Round", cursive;
