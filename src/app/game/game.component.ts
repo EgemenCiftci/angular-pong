@@ -19,6 +19,7 @@ export class GameComponent implements OnInit {
   y1 = 40;
   ballX = -1 * this.ballWidth;
   ballY = -1 * this.ballHeight;
+  canMoveBall = false;
 
   constructor() {}
 
@@ -35,6 +36,7 @@ export class GameComponent implements OnInit {
     this.y1 = 40;
     this.ballX = -1 * this.ballWidth;
     this.ballY = -1 * this.ballHeight;
+    this.canMoveBall = false;
   }
 
   newGame() {
@@ -46,6 +48,7 @@ export class GameComponent implements OnInit {
     this.setBall();
     const xIncrement = this.getRandomIncrement();
     const yIncrement = this.getRandomIncrement();
+    this.canMoveBall = true;
     window.requestAnimationFrame(() => this.moveBall(xIncrement, yIncrement));
   }
 
@@ -60,6 +63,9 @@ export class GameComponent implements OnInit {
   }
 
   async moveBall(xIncrement: number, yIncrement: number) {
+    if (!this.canMoveBall) {
+      return;
+    }
     this.ballX += xIncrement;
     this.ballY += yIncrement;
 
