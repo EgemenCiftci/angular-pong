@@ -15,8 +15,10 @@ export class GameComponent implements OnInit {
 
   score0 = 0;
   score1 = 0;
-  y0 = 40;
-  y1 = 40;
+  racket0Y = 40;
+  racket1Y = 40;
+  racket0X = this.racketMargin;
+  racket1X = 100 - this.racketMargin - this.racketWidth;
   ballX = -1 * this.ballWidth;
   ballY = -1 * this.ballHeight;
   canMoveBall = false;
@@ -32,8 +34,8 @@ export class GameComponent implements OnInit {
   }
 
   resetBallAndRackets() {
-    this.y0 = 40;
-    this.y1 = 40;
+    this.racket0Y = 40;
+    this.racket1Y = 40;
     this.ballX = -1 * this.ballWidth;
     this.ballY = -1 * this.ballHeight;
     this.canMoveBall = false;
@@ -110,11 +112,26 @@ export class GameComponent implements OnInit {
   }
 
   isBallCollidedWithRacket0(): boolean {
-    return false;
+    const racket0RightX = this.racket0X + this.racketWidth;
+    const ballCenterY = this.ballY + this.ballHeight / 2;
+    return (
+      this.ballX <= racket0RightX &&
+      this.ballX > this.racket0X &&
+      ballCenterY >= this.racket0Y &&
+      ballCenterY <= this.racket0Y + this.racketHeight
+    );
   }
 
   isBallCollidedWithRacket1(): boolean {
-    return false;
+    const ballRightX = this.ballX + this.ballWidth;
+    const racket1RightX = this.racket1X + this.racketWidth;
+    const ballCenterY = this.ballY + this.ballHeight / 2;
+    return (
+      ballRightX >= this.racket1X &&
+      ballRightX < racket1RightX &&
+      ballCenterY >= this.racket1Y &&
+      ballCenterY <= this.racket1Y + this.racketHeight
+    );
   }
 
   isBallCollidedWithWalls(): boolean {
