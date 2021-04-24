@@ -1,17 +1,18 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit, HostListener } from "@angular/core";
 
 @Component({
   selector: "app-game",
   templateUrl: "./game.component.svg",
   styleUrls: ["./game.component.css"]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   // constants
   ballWidth = 3;
   ballHeight = 4;
   racketWidth = 3;
   racketHeight = 20;
   racketMargin = 3;
+  racketSpeed = 3;
 
   score0 = 0;
   score1 = 0;
@@ -26,32 +27,33 @@ export class GameComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    document.addEventListener("keydown", this.keyDown);
-  }
+  ngOnInit() {}
 
-  keyDown(e: KeyboardEvent) {
+  ngOnDestroy() {}
+
+  @HostListener("window:keydown", ["$event"])
+  onKeyDown(e: any) {
     if (e.code === "KeyW") {
-      window.requestAnimationFrame(() => this.moveRacket0(-0.5));
+      window.requestAnimationFrame(() => this.moveRacket0(-this.racketSpeed));
     }
     if (e.code === "KeyS") {
-      window.requestAnimationFrame(() => this.moveRacket0(0.5));
-    }
-    if (e.code === "ArrowDown") {
-      window.requestAnimationFrame(() => this.moveRacket1(-0.5));
+      window.requestAnimationFrame(() => this.moveRacket0(this.racketSpeed));
     }
     if (e.code === "ArrowUp") {
-      window.requestAnimationFrame(() => this.moveRacket1(0.5));
+      window.requestAnimationFrame(() => this.moveRacket1(-this.racketSpeed));
+    }
+    if (e.code === "ArrowDown") {
+      window.requestAnimationFrame(() => this.moveRacket1(this.racketSpeed));
     }
   }
 
-  resetAll() {
+  resetAll(): void {
     this.score0 = 0;
     this.score1 = 0;
     this.resetBallAndRackets();
   }
 
-  resetBallAndRackets() {
+  resetBallAndRackets(): void {
     this.racket0Y = 40;
     this.racket1Y = 40;
     this.ballX = -1 * this.ballWidth;
@@ -59,12 +61,12 @@ export class GameComponent implements OnInit {
     this.canMoveBall = false;
   }
 
-  newGame() {
+  newGame(): void {
     this.resetAll();
     this.startRound();
   }
 
-  startRound() {
+  startRound(): void {
     this.setBall();
     const xIncrement = this.getRandomIncrement();
     const yIncrement = this.getRandomIncrement();
@@ -78,12 +80,12 @@ export class GameComponent implements OnInit {
     return ((Math.floor(Math.random() * 3) + 3) * (isNegative ? -1 : 1)) / 10;
   }
 
-  setBall() {
+  setBall(): void {
     this.ballX = 48.5;
     this.ballY = Math.floor(Math.random() * (100 - this.ballHeight + 1));
   }
 
-  async moveBall(xIncrement: number, yIncrement: number) {
+  async moveBall(xIncrement: number, yIncrement: number): Promise<void> {
     if (!this.canMoveBall) {
       return;
     }
@@ -118,24 +120,29 @@ export class GameComponent implements OnInit {
     window.requestAnimationFrame(() => this.moveBall(xIncrement, yIncrement));
   }
 
-  moveRacket0(yIncrement: number) {
+  moveRacket0(yIncrement: number): void {
     if (!this.canMoveRackets) {
       return;
     }
-    if (this.racket0Y <= 0 || this.racket0Y + this.racketHeight >= 300) {
-      return;
-    }
-    window.requestAnimationFrame(() => this.moveRacket0(yIncrement));
+    let newY = this.racket0Y + yIncrement;
+    newY = Math.min(newY, 300 - this.racketHeight);
+    newY = Math.max(newY, 0);
+    this.racket0Y = newY;
+    //window.requestAnimationFrame(() => this.moveRacket0(yIncrement));
   }
 
-  moveRacket1(yIncrement: number) {
+  moveRacket1(yIncrement: number): void {
     if (!this.canMoveRackets) {
       return;
     }
     if (this.racket1Y <= 0 || this.racket1Y + this.racketHeight >= 300) {
       return;
     }
-    window.requestAnimationFrame(() => this.moveRacket1(yIncrement));
+    let newY = this.racket1Y + yIncrement;
+    newY = Math.min(newY, 300 - this.racketHeight);
+    newY = Math.max(newY, 0);
+    this.racket1Y = newY;
+    // window.requestAnimationFrame(() => this.moveRacket1(yIncrement));
   }
 
   applyCollisionWithRackets(xIncrement: number): number {
