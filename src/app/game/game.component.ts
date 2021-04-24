@@ -22,10 +22,28 @@ export class GameComponent implements OnInit {
   ballX = -1 * this.ballWidth;
   ballY = -1 * this.ballHeight;
   canMoveBall = false;
+  canMoveRackets = false;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    document.addEventListener("keydown", this.keyDown);
+  }
+
+  keyDown(e: KeyboardEvent) {
+    if (e.code === "KeyW") {
+      window.requestAnimationFrame(() => this.moveRacket0(-0.5));
+    }
+    if (e.code === "KeyS") {
+      window.requestAnimationFrame(() => this.moveRacket0(0.5));
+    }
+    if (e.code === "ArrowDown") {
+      window.requestAnimationFrame(() => this.moveRacket1(-0.5));
+    }
+    if (e.code === "ArrowUp") {
+      window.requestAnimationFrame(() => this.moveRacket1(0.5));
+    }
+  }
 
   resetAll() {
     this.score0 = 0;
@@ -51,6 +69,7 @@ export class GameComponent implements OnInit {
     const xIncrement = this.getRandomIncrement();
     const yIncrement = this.getRandomIncrement();
     this.canMoveBall = true;
+    this.canMoveRackets = true;
     window.requestAnimationFrame(() => this.moveBall(xIncrement, yIncrement));
   }
 
@@ -96,8 +115,27 @@ export class GameComponent implements OnInit {
       }
       return;
     }
-
     window.requestAnimationFrame(() => this.moveBall(xIncrement, yIncrement));
+  }
+
+  moveRacket0(yIncrement: number) {
+    if (!this.canMoveRackets) {
+      return;
+    }
+    if (this.racket0Y <= 0 || this.racket0Y + this.racketHeight >= 300) {
+      return;
+    }
+    window.requestAnimationFrame(() => this.moveRacket0(yIncrement));
+  }
+
+  moveRacket1(yIncrement: number) {
+    if (!this.canMoveRackets) {
+      return;
+    }
+    if (this.racket1Y <= 0 || this.racket1Y + this.racketHeight >= 300) {
+      return;
+    }
+    window.requestAnimationFrame(() => this.moveRacket1(yIncrement));
   }
 
   applyCollisionWithRackets(xIncrement: number): number {
