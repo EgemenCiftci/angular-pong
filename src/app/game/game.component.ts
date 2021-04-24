@@ -125,24 +125,19 @@ export class GameComponent implements OnInit, OnDestroy {
       return;
     }
     let newY = this.racket0Y + yIncrement;
-    newY = Math.min(newY, 300 - this.racketHeight);
+    newY = Math.min(newY, 100 - this.racketHeight);
     newY = Math.max(newY, 0);
     this.racket0Y = newY;
-    //window.requestAnimationFrame(() => this.moveRacket0(yIncrement));
   }
 
   moveRacket1(yIncrement: number): void {
     if (!this.canMoveRackets) {
       return;
     }
-    if (this.racket1Y <= 0 || this.racket1Y + this.racketHeight >= 300) {
-      return;
-    }
     let newY = this.racket1Y + yIncrement;
-    newY = Math.min(newY, 300 - this.racketHeight);
+    newY = Math.min(newY, 100 - this.racketHeight);
     newY = Math.max(newY, 0);
     this.racket1Y = newY;
-    // window.requestAnimationFrame(() => this.moveRacket1(yIncrement));
   }
 
   applyCollisionWithRackets(xIncrement: number): number {
