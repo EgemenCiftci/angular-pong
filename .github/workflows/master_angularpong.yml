@@ -33,7 +33,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: AngularPong
-        slot-name: Production
         publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5563FD109148431E9B6956C8614A0C76 }}
-        package: .
+        package: ./dist/angular-pong
 
