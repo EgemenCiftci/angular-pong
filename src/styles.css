@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Nova+Round&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nova+Round&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Atomic+Age&display=swap');
 
 html,
@@ -8,5 +8,5 @@ body {
   height: calc(100vh - 22px);
   width: 100%;
   background: yellow;
-  font-family: "Nova Round", cursive;
+  font-family: 'Nova Round', cursive;
 }

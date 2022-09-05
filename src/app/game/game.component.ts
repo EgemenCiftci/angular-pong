@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit, HostListener } from "@angular/core";
+import { Component, HostListener } from '@angular/core';
 
 @Component({
-  selector: "app-game",
-  templateUrl: "./game.component.svg",
-  styleUrls: ["./game.component.css"]
+  selector: 'app-game',
+  templateUrl: './game.component.svg',
+  styleUrls: ['./game.component.css'],
 })
-export class GameComponent implements OnInit, OnDestroy {
+export class GameComponent {
   // constants
   ballWidth = 3;
   ballHeight = 4;
@@ -25,24 +25,18 @@ export class GameComponent implements OnInit, OnDestroy {
   canMoveBall = false;
   canMoveRackets = false;
 
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
-
-  @HostListener("window:keydown", ["$event"])
+  @HostListener('window:keydown', ['$event'])
   onKeyDown(e: any) {
-    if (e.code === "KeyW") {
+    if (e.code === 'KeyW') {
       window.requestAnimationFrame(() => this.moveRacket0(-this.racketSpeed));
     }
-    if (e.code === "KeyS") {
+    if (e.code === 'KeyS') {
       window.requestAnimationFrame(() => this.moveRacket0(this.racketSpeed));
     }
-    if (e.code === "ArrowUp") {
+    if (e.code === 'ArrowUp') {
       window.requestAnimationFrame(() => this.moveRacket1(-this.racketSpeed));
     }
-    if (e.code === "ArrowDown") {
+    if (e.code === 'ArrowDown') {
       window.requestAnimationFrame(() => this.moveRacket1(this.racketSpeed));
     }
   }
@@ -195,6 +189,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   delay(ms: number): Promise<void> {
-    return new Promise(f => setTimeout(f, ms));
+    return new Promise((f) => setTimeout(f, ms));
   }
 }

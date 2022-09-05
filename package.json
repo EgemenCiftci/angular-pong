@@ -3,17 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@angular/animations": "^13.3.9",
-    "@angular/common": "^13.3.9",
-    "@angular/compiler": "^13.3.9",
-    "@angular/core": "^13.3.9",
-    "@angular/forms": "^13.3.9",
-    "@angular/platform-browser": "^13.3.9",
-    "@angular/platform-browser-dynamic": "^13.3.9",
-    "@angular/router": "^13.3.9",
-    "rxjs": "^7.5.5",
+    "@angular/animations": "^14.2.0",
+    "@angular/common": "^14.2.0",
+    "@angular/compiler": "^14.2.0",
+    "@angular/core": "^14.2.0",
+    "@angular/forms": "^14.2.0",
+    "@angular/platform-browser": "^14.2.0",
+    "@angular/platform-browser-dynamic": "^14.2.0",
+    "@angular/router": "^14.2.0",
+    "rxjs": "^7.5.6",
     "tslib": "^2.4.0",
-    "zone.js": "^0.11.5"
+    "zone.js": "^0.11.8"
   },
   "scripts": {
     "ng": "ng",
