@@ -24,20 +24,38 @@ export class GameComponent {
   ballY = -1 * this.ballHeight;
   canMoveBall = false;
   canMoveRackets = false;
+  racket0Increment = 0;
+  racket1Increment = 0;
 
   @HostListener('window:keydown', ['$event'])
   onKeyDown(e: any) {
     if (e.code === 'KeyW') {
-      window.requestAnimationFrame(() => this.moveRacket0(-this.racketSpeed));
+      this.racket0Increment = -this.racketSpeed;
     }
     if (e.code === 'KeyS') {
-      window.requestAnimationFrame(() => this.moveRacket0(this.racketSpeed));
+      this.racket0Increment = this.racketSpeed;
     }
     if (e.code === 'ArrowUp') {
-      window.requestAnimationFrame(() => this.moveRacket1(-this.racketSpeed));
+      this.racket1Increment = -this.racketSpeed;
     }
     if (e.code === 'ArrowDown') {
-      window.requestAnimationFrame(() => this.moveRacket1(this.racketSpeed));
+      this.racket1Increment = this.racketSpeed;
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyUp(e: any) {
+    if (e.code === 'KeyW') {
+      this.racket0Increment = 0;
+    }
+    if (e.code === 'KeyS') {
+      this.racket0Increment = 0;
+    }
+    if (e.code === 'ArrowUp') {
+      this.racket1Increment = 0;
+    }
+    if (e.code === 'ArrowDown') {
+      this.racket1Increment = 0;
     }
   }
 
@@ -66,6 +84,8 @@ export class GameComponent {
     const yIncrement = this.getRandomIncrement();
     this.canMoveBall = true;
     this.canMoveRackets = true;
+    window.requestAnimationFrame(() => this.moveRacket0(this.racket0Increment));
+    window.requestAnimationFrame(() => this.moveRacket1(this.racket1Increment));
     window.requestAnimationFrame(() => this.moveBall(xIncrement, yIncrement));
   }
 
@@ -122,6 +142,7 @@ export class GameComponent {
     newY = Math.min(newY, 100 - this.racketHeight);
     newY = Math.max(newY, 0);
     this.racket0Y = newY;
+    window.requestAnimationFrame(() => this.moveRacket0(this.racket0Increment));
   }
 
   moveRacket1(yIncrement: number): void {
@@ -132,6 +153,7 @@ export class GameComponent {
     newY = Math.min(newY, 100 - this.racketHeight);
     newY = Math.max(newY, 0);
     this.racket1Y = newY;
+    window.requestAnimationFrame(() => this.moveRacket1(this.racket1Increment));
   }
 
   applyCollisionWithRackets(xIncrement: number): number {
