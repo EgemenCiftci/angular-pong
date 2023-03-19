@@ -12,7 +12,7 @@ export class GameComponent {
   racketWidth = 3;
   racketHeight = 20;
   racketMargin = 3;
-  racketSpeed = 3;
+  racketSpeed = 1;
 
   score0 = 0;
   score1 = 0;
@@ -45,16 +45,10 @@ export class GameComponent {
 
   @HostListener('window:keyup', ['$event'])
   onKeyUp(e: any) {
-    if (e.code === 'KeyW') {
+    if (e.code === 'KeyW' || e.code === 'KeyS') {
       this.racket0Increment = 0;
     }
-    if (e.code === 'KeyS') {
-      this.racket0Increment = 0;
-    }
-    if (e.code === 'ArrowUp') {
-      this.racket1Increment = 0;
-    }
-    if (e.code === 'ArrowDown') {
+    if (e.code === 'ArrowUp' || e.code === 'ArrowDown') {
       this.racket1Increment = 0;
     }
   }
