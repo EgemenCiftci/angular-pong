@@ -1,3 +1,4 @@
 # Angular Pong
-Angular pong game
+
+A pong game without using canvas element.
 [Edit on StackBlitz ⚡️](https://stackblitz.com/edit/angular-pong)
